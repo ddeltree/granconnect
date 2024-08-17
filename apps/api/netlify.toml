@@ -1,0 +1,29 @@
+functionsDirectory = "apps/api/api"
+functionsDirectoryOrigin = "ui"
+plugins = []
+headers = []
+redirects = []
+
+[functions]
+
+  [functions."*"]
+
+[build]
+publish = "apps/api/api"
+publishOrigin = "ui"
+base = "."
+functions = "apps/api/api"
+
+  [build.environment]
+
+  [build.processing]
+
+    [build.processing.css]
+
+    [build.processing.html]
+
+    [build.processing.images]
+
+    [build.processing.js]
+
+  [build.services]

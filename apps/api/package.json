@@ -1,0 +1,23 @@
+{
+  "name": "api",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "dependencies": {
+    "@netlify/functions": "^2.6.0",
+    "axios": "^1.6.8",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "firebase-admin": "^12.0.0",
+    "node-html-parser": "^6.1.12"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "esbuild": "^0.20.2",
+    "netlify-cli": "^17.21.1",
+    "tsx": "^4.7.1",
+    "typescript": "^5.5.4",
+    "vite-node": "^1.4.0"
+  }
+}

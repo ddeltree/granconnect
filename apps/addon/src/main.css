@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply h-screen bg-black text-white font-inter text-base;
+  }
+  input {
+    @apply bg-black p-1 px-2 border rounded;
+  }
+  input:focus {
+    @apply outline-offset-2 outline-8 rounded-none;
+  }
+  button {
+    @apply text-black bg-white font-bold border-2 rounded-sm mt-2 p-2;
+  }
+  button:hover {
+    @apply bg-black text-white font-bold;
+  }
+  button:focus {
+    @apply bg-green-900 border-green-900 text-green-50;
+  }
+  button:disabled {
+    @apply bg-black text-red-500 border-0 p-2.5 font-extrabold;
+  }
+}
