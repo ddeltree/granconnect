@@ -19,15 +19,15 @@ Copie a url da saída desse comando e crie o arquivo `/apps/addon/.env` com o co
 VITE_API_URL=...
 ```
 
-### Configurar a conta de serviço do firebase
+### Configurar credenciais
 
-A API precisa acessar o banco de dados para retornar o cookie de sessão e autorizar o usuário anônimo. Crie uma conta de serviço no firebase (_configurações do projeto > contas de serviço_), e cole o conteúdo do json como uma string:
+A API precisa acessar o banco de dados para retornar o cookie de sessão e autorizar o usuário anônimo. Crie uma **conta de serviço no firebase** (_configurações do projeto > contas de serviço_), e cole o conteúdo do json como uma string, juntos ao **e-mail e senha da conta do grancursos**:
 
 ```bash
+netlify env:set EMAIL '...'
+netlify env:set SENHA '...'
 netlify env:set SERVICE_ACCOUNT '...'
 ```
-
-- Crie também um arquivo `apps/api/.env`, caso deseje **testar localmente** (`pnpm run dev`).
 
 ### Dar deploy
 

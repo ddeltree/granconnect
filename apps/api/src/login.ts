@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { storeSession } from './firebase';
 import { parse } from 'node-html-parser';
 import { parseCookieHeaders } from './utils';
