@@ -24,13 +24,14 @@ export async function isEnabledUserId(uid: string) {
   if (!document.exists) return false;
   const data = document.data();
   if (data === undefined) return false;
-  const arrayEnabledUID = (data.arrayEnabledUID ?? []) as string[];
+  const arrayEnabledUID: string[] = data.arrayEnabledUID ?? [];
   return arrayEnabledUID.includes(uid);
 }
 
 export async function fetchDatabaseCookie() {
   const document = await app.firestore().doc('admin/cookie').get();
-  return (document.data() as Cookie) ?? null;
+  if (!document.exists) return null;
+  return document.data() as Cookie;
 }
 
 export async function storeSession(cookie: Cookie) {

@@ -14,7 +14,8 @@ export default async function handler(req: Request): Promise<Response> {
   return new Response(JSON.stringify(cookie));
 }
 
-async function isCookieStillValid(cookie: Cookie) {
+async function isCookieStillValid(cookie: Cookie | null) {
+  if (cookie === null) return false;
   const resp = await axios.get(
     'https://grancursosonline.com.br/identificacao/',
     {
