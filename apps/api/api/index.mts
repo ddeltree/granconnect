@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import type { Config } from '@netlify/functions';
 import { checkAuthorized } from '../src/requests.js';
 import { requestLogin } from '../src/login.js';
