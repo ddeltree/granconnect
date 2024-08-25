@@ -7,7 +7,7 @@ import { Cookie } from '../src/utils.js';
 import axios from 'axios';
 
 // precisa vir com Content-Type: application/json
-export default async function handler(req: Request) {
+export default async function handler(req: Request): Promise<Response> {
   const resp = await checkAuthorized(req);
   if (resp !== 'ok') return resp;
   let cookie = await fetchDatabaseCookie();
