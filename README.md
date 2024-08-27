@@ -1,81 +1,66 @@
-# Turborepo starter
+# GranConnect
 
-This is an official starter Turborepo.
+Este monorepo apresenta uma extensão de navegador para Firefox e Chromium e uma API que permitem o compartilhamento de uma mesma conta e os acessos simultâneos no [GranCursosOnline](https://grancursosonline.com.br/), sem expor a senha.
 
-## Using this example
+Um acesso simultâneo no GranCursos é detectado quando há a ocorrência de múltiplas ações de login, gerando múltiplos cookies de sessão. Portanto, ele não será detectado quando um único cookie for distribuído entre múltiplos dispositivos. Este projeto inclui uma API que realiza esse único login, e uma extensão para distribuir esse único cookie entre os múltiplos usuários.
 
-Run the following command:
+## Como utilizar este projeto
 
-```sh
-npx create-turbo@latest
-```
+Os recursos utilizados aqui são o [Firebase](https://firebase.google.com) (banco de dados e autenticação) e o [netlify](https://www.netlify.com/) (hospedar a API), ambos gratuitos.
 
-## What's inside?
+Siga o [guia](#configuração-do-projeto-no-firebase) abaixo para configurar o projeto no Firebase. Após isso, consulte os guias para a configuração e uso da [API](apps/api/README.md) e da [extensão](apps/addon/README.md).
 
-This Turborepo includes the following packages/apps:
+## Configuração do projeto no Firebase
 
-### Apps and Packages
+O Firebase será utilizado para:
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- autenticar os usuários da extensão anonimamente;
+- armazenar o cookie de sessão da conta do GranCursos;
+- gerenciar manualmente a permissão de acesso de cada usuário ao cookie.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+### Firestore
 
-### Utilities
+1. Crie um novo projeto pelo [console de gerenciamento](https://console.firebase.google.com/).
 
-This Turborepo has some additional tools already setup for you:
+2. Crie um banco de dados Firestore.
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+3. Configure as _regras de segurança_ para o seguinte:
 
 ```
-cd my-turborepo
-pnpm build
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+  	match /{document=**} {
+    	allow read, write: if false;
+    }
+    match /users/{uid} {
+      allow read, write: if request.auth != null && uid == request.auth.uid;
+    }
+  }
+}
 ```
 
-### Develop
+4. Nas **configurações do projeto**, crie um novo app web e copie o valor de `firebaseConfig`, e transforme em json:
 
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+```json
+{
+  "apiKey": "...",
+  "authDomain": "...",
+  "projectId": "...",
+  "storageBucket": "...",
+  "messagingSenderId": "...",
+  "appId": "..."
+}
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+5. Configure a variável de ambiente `VITE_FIREBASE_CONFIG`, criando o arquivo `apps/addon/.env`:
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
+```bash
+VITE_API_URL="..." # definido mais a frente
+VITE_FIREBASE_CONFIG='{"apiKey": "...","authDomain": "...","projectId": "...","storageBucket": "...","messagingSenderId": "...","appId": "..."}'
 ```
-npx turbo link
-```
 
-## Useful Links
+### Authentication
 
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+É preciso habilitar o login anônimo como um método de login.
