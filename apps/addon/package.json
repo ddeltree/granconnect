@@ -12,7 +12,6 @@
     "build:ff": "vite build -- --firefox"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
     "@sveltejs/vite-plugin-svelte": "^2.0.3",
     "@tsconfig/svelte": "^3.0.0",
     "@types/webextension-polyfill": "^0.10.0",
