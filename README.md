@@ -10,6 +10,10 @@ Os recursos utilizados aqui são o [Firebase](https://firebase.google.com) (banc
 
 Siga o [guia](#configuração-do-projeto-no-firebase) abaixo para configurar o projeto no Firebase. Após isso, consulte os guias para a configuração e uso da [API](apps/api/README.md) e da [extensão](apps/addon/README.md).
 
+## Dependências
+
+Instale as dependências usando `pnpm install` a partir da raiz do projeto.
+
 ## Configuração do projeto no Firebase
 
 O Firebase será utilizado para:

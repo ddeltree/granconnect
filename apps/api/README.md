@@ -3,6 +3,7 @@
 ### Instalação e login
 
 ```bash
+cd apps/api
 npm i -g netlify-cli
 netlify login
 ```
@@ -13,10 +14,11 @@ netlify login
 netlify sites:create
 ```
 
-Copie a url da saída desse comando e crie o arquivo `/apps/addon/.env` com o conteúdo:
+Copie a url da saída desse comando e configure a variável de ambiente `VITE_API_URL` no arquivo `/apps/addon/.env`:
 
-```
-VITE_API_URL=...
+```bash
+VITE_API_URL="https://XXXX.netlify.app"
+VITE_FIREBASE_CONFIG='...'
 ```
 
 ### Configurar credenciais
@@ -28,6 +30,16 @@ netlify env:set EMAIL '...'
 netlify env:set SENHA '...'
 netlify env:set SERVICE_ACCOUNT '...'
 ```
+
+## Utilização
+
+Execute o comando abaixo para testar localmente:
+
+```bash
+pnpm --filter=api run dev
+```
+
+O projeto terá sido bem configurado caso o retorno da requisição _GET /_ seja "**Unsupported method**". Senão, provavelmente é um erro ao configurar as variáveis de ambiente.
 
 ### Dar deploy
 
